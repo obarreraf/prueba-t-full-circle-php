@@ -1,7 +1,9 @@
 <?php
 $arr = [10,30,51,50,70,90];
 
-print_r(selectSecondValue($arr));
+$secondTop = selectSecondValue($arr);
+
+echo "El segundo valor mayor es: $secondTop";
 
 function selectSecondValue(array $array): int
 {
