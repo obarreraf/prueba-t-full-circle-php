@@ -13,16 +13,27 @@ list($totalCategoryExpenses, $topCategoryExpenses) = categoryExpenses($transacti
 
 $filteredTransactionResult = filteredTransactions($transactions);
 
-echo "Balance actual de la cuenta: $accountBalanceResult<br />";
-echo "La categoria con más gasto es: $topCategoryExpenses , con un gasto de $totalCategoryExpenses<br />";
+$result = [
+    'balance' => $accountBalanceResult,
+    'top_category' => [
+        'category' => $topCategoryExpenses,
+        'total_expenses' => $totalCategoryExpenses
+    ],
+    'recent_transactions' => []
+];
 
-echo "Transacciones -3 Dias: <br />";
 foreach($filteredTransactionResult as $filtered){
-    echo "Id: {$filtered['id']} | 
-        Categoria: {$filtered['cat']} | 
-        Fecha: {$filtered['date']} | 
-        Monto: {$filtered['amount']} <br />";
+    $result['recent_transactions'][] = [
+        'id' => $filtered['id'],
+        'category' => $filtered['cat'],
+        'date' => $filtered['date'],
+        'amount' => $filtered['amount']
+    ];
 }
+
+echo "<pre>";
+print_r($result);
+echo "</pre>";
 
 function accountBalance(array $transactions): int
 {
